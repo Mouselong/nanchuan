@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>碱麦生花 - 南川楼主题微展厅</title>
+
+    <style>
+        /* 核心品牌色板 */
+        :root {
+            --bg-paper: #fbf9f3;     /* 宣纸白 */
+            --text-ink: #2c2c2c;     /* 徽墨黑 */
+            --text-muted: #6e685e;   /* 灰褐 */
+            --primary-red: #9e2a2b;  /* 朱砂红 */
+            --accent-gold: #c5a059;  /* 雅金 */
+            --line-color: #e5dfd3;   /* 绢丝线 */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-paper);
+            font-family: "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
+            color: var(--text-ink);
+            line-height: 1.8;
+            letter-spacing: 1px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 移动端专属容器 */
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 40px 24px 80px 24px;
+            box-sizing: border-box;
+        }
+
+        /* 头部：博物馆馆藏级排版 */
+        .brand-header {
+            text-align: center;
+            margin-bottom: 45px;
+            position: relative;
+        }
+
+        .archive-tag {
+            display: inline-block;
+            font-size: 11px;
+            color: var(--accent-gold);
+            border: 1px solid var(--accent-gold);
+            padding: 2px 10px;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            border-radius: 2px;
+        }
+
+        .main-title {
+            font-size: 26px;
+            color: var(--primary-red);
+            font-weight: 500;
+            margin: 0 0 10px 0;
+            letter-spacing: 6px;
+        }
+
+        .sub-title {
+            font-size: 13px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+        }
+
+        /* 多宝阁视窗设计 */
+        .exhibit-window {
+            width: 100%;
+            height: 380px;
+            background-color: #ffffff;
+            border: 1px solid var(--line-color);
+            margin-bottom: 50px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(197, 160, 89, 0.05);
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 内层雅金衬框线 */
+        .exhibit-window::before {
+            content: '';
+            position: absolute;
+            top: 12px; left: 12px; right: 12px; bottom: 12px;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* 视窗角落中国古典回字纹装饰 */
+        .exhibit-window::after {
+            content: '▫';
+            position: absolute;
+            top: 6px; left: 14px;
+            color: var(--accent-gold);
+            font-size: 14px;
+            pointer-events: none;
+        }
+
+        /* 静态图片展示样式 */
+        .exhibit-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* 保证图片按比例完整显示 */
+            padding: 24px; /* 为画框边缘留出呼吸空间 */
+            box-sizing: border-box;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 文化内涵与图文区块 */
+        .cultural-block {
+            margin-bottom: 45px;
+            position: relative;
+        }
+
+        .block-header {
+            font-size: 18px;
+            color: var(--primary-red);
+            font-weight: 600;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            letter-spacing: 2px;
+        }
+
+        /* 标题下方的古典渐变金线 */
+        .block-header::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--accent-gold), transparent);
+            margin-left: 15px;
+            opacity: 0.6;
+        }
+
+        .block-body p {
+            text-align: justify;
+            margin: 0 0 16px 0;
+            font-size: 14.5px;
+            text-indent: 2em;
+            color: var(--text-ink);
+        }
+
+        /* 极简国风互动区 */
+        .fortune-container {
+            margin-top: 60px;
+            text-align: center;
+            border-top: 1px solid var(--line-color);
+            padding-top: 40px;
+        }
+
+        .action-button {
+            background-color: var(--primary-red);
+            color: var(--bg-paper);
+            border: none;
+            padding: 14px 40px;
+            font-size: 14px;
+            font-family: inherit;
+            cursor: pointer;
+            letter-spacing: 3px;
+            border-radius: 2px;
+            box-shadow: 0 4px 15px rgba(158, 42, 43, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .action-button:hover {
+            background-color: #822223;
+        }
+
+        /* 祈福签文展示样式 */
+        .fortune-card-output {
+            margin-top: 35px;
+            display: inline-block;
+            background-color: #ffffff;
+            border: 1px solid var(--accent-gold);
+            padding: 15px 25px;
+            font-size: 16px;
+            color: var(--primary-red);
+            letter-spacing: 4px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+
+        .fortune-card-output.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header class="brand-header">
+            <div class="archive-tag">CANGZHOU / 非遗数字物语</div>
+            <h1 class="main-title">古楼巍峨 · 刻木生花</h1>
+            <div class="sub-title">大运河地标【南川楼】主题面花</div>
+        </header>
+
+        <div class="exhibit-window">
+            <img src="nanchuan.png" alt="南川楼主题面花模具" class="exhibit-image">
+        </div>
+
+        <article class="cultural-block">
+            <h2 class="block-header">运河明珠 · 南川楼</h2>
+            <div class="block-body">
+                <p>南川楼屹立于大运河沧州段畔，重檐兽脊，气势恢宏。它曾见证了昔日大运河漕运繁华的千帆竞发，是沧州运河文化的重要历史图腾。</p>
+                <p>项目团队将这座历史名楼的雄姿，以精湛的阴刻技法一比一复刻于椴木模具之上。每一次面花的磕制与诞生，都是一次与百年运河文脉的跨时空对话。</p>
+            </div>
+        </article>
+
+        <article class="cultural-block">
+            <h2 class="block-header">百年非遗 · 匠心刻录</h2>
+            <div class="block-body">
+                <p>黄骅面花模子雕刻技艺至今已由高姓家族传承一百五十余年，现由第四代传承人高殿华主理。</p>
+                <p>制作一枚合格的模具，需精选木质细腻、不抢麦香的优质椴木。历经选料、刨板、画样、凿形、刻花等十道繁复工序。刀刻斧凿间，方能成就您手中这枚承载岁月的文化印记。</p>
+            </div>
+        </article>
+
+        <footer class="fortune-container">
+            <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 25px;">轻触下方按钮，开启您的专属非遗福签</p>
+            <button class="action-button" onclick="drawFortune()">抽取数字福签</button>
+            <br>
+            <div class="fortune-card-output" id="fortuneResult"></div>
+        </footer>
+
+    </div>
+
+    <script>
+        const fortunes = [
+            "「 锦鲤附体 · 逢考必过 」",
+            "「 鸿运当头 · 万事胜意 」",
+            "「 五谷丰登 · 岁岁平安 」",
+            "「 福寿双全 · 吉星高照 」",
+            "「 气贯长虹 · 大赛夺金 」"
+        ];
+
+        function drawFortune() {
+            const resultBox = document.getElementById('fortuneResult');
+            resultBox.classList.remove('show'); 
+            
+            setTimeout(() => {
+                const randomIndex = Math.floor(Math.random() * fortunes.length);
+                resultBox.innerText = fortunes[randomIndex];
+                resultBox.classList.add('show'); 
+            }, 250);
+        }
+    </script>
+</body>
+</html>
